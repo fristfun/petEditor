@@ -1,0 +1,273 @@
+关于Actions.xml分析
+
+動作リスト#包含动作数据,第一个为简单动作,第二个为实际动作
+
+对比
+第一个动作表
+都为 種類="組み込み"(嵌入,即单个)  
+还有 1.種類="静止" 枠="地面" 2.種類="移動" 枠="壁" ....
+
+第二个动作表
+都为 種類="複合"(组合)
+
+子元素
+回头
+<動作 名前="振り向く" 種類="組み込み" クラス="com.group_finity.mascot.action.Look" />
+方向改变
+<動作 名前="変位" 種類="組み込み" クラス="com.group_finity.mascot.action.Offset" />
+
+吃饭动作
+<動作 名前="座ってマウスを見上げる" 種類="静止" 枠="地面">
+	<アニメーション 条件="#{mascot.environment.cursor.y &lt; mascot.environment.screen.height/2}">
+		<ポーズ 画像="/shime16.png" 基準座標="64,128" 移動速度="0,0" 長さ="250" />
+	</アニメーション>
+	<アニメーション>
+		<ポーズ 画像="/shime15.png" 基準座標="64,128" 移動速度="0,0" 長さ="250" />
+	</アニメーション>
+</動作>
+
+爬行
+<動作 名前="壁を登る" 種類="移動" 枠="壁">
+	<アニメーション 条件="#{目的地Y &lt; mascot.anchor.y}">
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,0" 長さ="16" />
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,-1" 長さ="4" />
+		<ポーズ 画像="/shime12.png" 基準座標="64,128" 移動速度="0,-1" 長さ="4" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,-1" 長さ="4" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,0" 長さ="16" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,-2" 長さ="4" />
+		<ポーズ 画像="/shime12.png" 基準座標="64,128" 移動速度="0,-2" 長さ="4" />
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,-2" 長さ="4" />
+	</アニメーション>
+
+	<アニメーション 条件="#{目的地Y &gt;= mascot.anchor.y}">
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,0" 長さ="16" />
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,2" 長さ="4" />
+		<ポーズ 画像="/shime12.png" 基準座標="64,128" 移動速度="0,2" 長さ="4" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,2" 長さ="4" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,0" 長さ="16" />
+		<ポーズ 画像="/shime13.png" 基準座標="64,128" 移動速度="0,1" 長さ="4" />
+		<ポーズ 画像="/shime12.png" 基準座標="64,128" 移動速度="0,1" 長さ="4" />
+		<ポーズ 画像="/shime14.png" 基準座標="64,128" 移動速度="0,1" 長さ="4" />
+	</アニメーション>
+</動作>
+
+空中跌落
+<動作 名前="落ちる" 種類="組み込み" クラス="com.group_finity.mascot.action.Fall"
+	空気抵抗X="0.05" 空気抵抗Y="0.1" 重力="2">
+	<アニメーション>
+		<ポーズ 画像="/shime4.png" 基準座標="64,128" 移動速度="0,0" 長さ="250" />
+	</アニメーション>
+</動作>
+
+
+拖拽
+<動作 名前="つままれる" 種類="組み込み" クラス="com.group_finity.mascot.action.Dragged">
+	<アニメーション 条件="#{footX &lt; mascot.environment.cursor.x-50}">
+		<ポーズ 画像="/shime9.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+	</アニメーション>
+	<アニメーション 条件="#{footX &lt; mascot.environment.cursor.x-30}">
+		<ポーズ 画像="/shime7.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+	</アニメーション>
+	<アニメーション 条件="#{footX &lt; mascot.environment.cursor.x+30}">
+		<ポーズ 画像="/shime1.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+	</アニメーション>
+	<アニメーション 条件="#{footX &lt; mascot.environment.cursor.x+50}">
+		<ポーズ 画像="/shime8.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+	</アニメーション>
+	<アニメーション 条件="#{footX &gt;= mascot.environment.cursor.x+30}">
+		<ポーズ 画像="/shime10.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+	</アニメーション>
+</動作>
+
+拖拽,未看到
+<動作 名前="抵抗する" 種類="組み込み" クラス="com.group_finity.mascot.action.Regist">
+	<アニメーション>
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime1.png" 基準座標="64,128" 移動速度="0,0" 長さ="50" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime1.png" 基準座標="64,128" 移動速度="0,0" 長さ="100" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="5" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime5.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+		<ポーズ 画像="/shime6.png" 基準座標="64,128" 移動速度="0,0" 長さ="2" />
+	</アニメーション>
+</動作>
+
+第二个动作表
+
+落下 原动作:落下->有两种可能:1.落地站立 2.爬墙
+<動作 名前="落下する" 種類="複合" 繰り返し="false">
+	<動作参照 名前="落ちる"/>
+	<動作 種類="選択">
+		<動作 種類="複合" 条件="${mascot.environment.floor.isOn(mascot.anchor) ||
+			mascot.environment.activeIE.topBorder.isOn(mascot.anchor) }">
+			<動作参照 名前="跳ねる"/>
+			<動作参照 名前="立つ" 長さ="${100+Math.random()*100}" />
+		</動作>
+		<動作参照 名前="壁に掴まる" 長さ="100" />
+	</動作>
+</動作>
+
+拖拽 返回TRUE 表名是 系统操作
+<動作 名前="ドラッグされる" 種類="複合" 繰り返し="true">
+	<動作参照 名前="つままれる"/>
+	<動作参照 名前="抵抗する" />
+</動作>
+
+跌落 改变方向
+<動作 名前="壁から落ちる" 種類="複合" 繰り返し="false">
+	<動作参照 名前="変位" X="${mascot.lookRight ? -1 : 1}" />
+	<動作参照 名前="立つ" />
+</動作>
+
+界面走动 慢走/快走
+<動作 名前="ワークエリアの下辺を歩く" 種類="複合" 繰り返し="false">
+	<動作参照 名前="歩く" 目的地X="${mascot.environment.workArea.left+64+Math.random()*(mascot.environment.workArea.width-128)}" />
+</動作>
+
+<動作 名前="ワークエリアの下辺を走る" 種類="複合" 繰り返し="false">
+	<動作参照 名前="走る" 目的地X="${mascot.environment.workArea.left+64+Math.random()*(mascot.environment.workArea.width-128)}" />
+</動作>
+
+坐在工作区左边 步行->站立->回头->查看->左下
+<動作 名前="ワークエリアの下辺の左の端っこで座る" 種類="複合" 繰り返し="false">
+	<動作参照 名前="歩く" 目的地X="${mascot.environment.workArea.left+100+Math.random()*300}" />
+	<動作参照 名前="立つ" 長さ="${20+Math.random()*20}" />
+	<動作参照 名前="振り向く" 右向き="true" />
+	<動作参照 名前="立つ" 長さ="${20+Math.random()*20}" />
+	<動作参照 名前="座る" 長さ="${500+Math.random()*1000}" />
+</動作>
+
+左墙 攀爬 步行->爬墙
+<動作 名前="ワークエリアの下辺から左の壁によじのぼる" 種類="複合" 繰り返し="false">
+	<動作参照 名前="歩く" 目的地X="#{mascot.environment.workArea.left}" />
+	<動作参照 名前="壁を登る" 目的地Y="#{mascot.environment.workArea.bottom-64}" />
+</動作>
+
+中途攀爬? 含义不明
+<動作 名前="ワークエリアの壁を途中まで登る" 種類="複合" 繰り返し="false">
+	<動作参照 名前="壁を登る" 目的地Y="${mascot.environment.workArea.top+64 + Math.random()*(mascot.environment.workArea.height-128)}" />
+	
+鼠标聚集
+<動作 名前="マウスの周りに集まる" 種類="複合" 繰り返し="false">
+<動作 種類="複合" 条件="${mascot.environment.ceiling.isOn(mascot.anchor) || mascot.environment.activeIE.bottomBorder.isOn(mascot.anchor)}">
+	<動作参照 名前="変位" Y="1" />
+	<動作参照 名前="落ちる"/>
+	<動作参照 名前="跳ねる" />
+</動作>
+<動作 種類="複合" 条件="${mascot.environment.workArea.leftBorder.isOn(mascot.anchor) || mascot.environment.activeIE.rightBorder.isOn(mascot.anchor)}">
+	<動作参照 名前="変位" X="1" />
+	<動作参照 名前="落ちる"/>
+	<動作参照 名前="跳ねる" />
+</動作>
+<動作 種類="複合" 条件="${mascot.environment.workArea.rightBorder.isOn(mascot.anchor) || mascot.environment.activeIE.leftBorder.isOn(mascot.anchor)}">
+	<動作参照 名前="変位" X="-1" />
+	<動作参照 名前="落ちる"/>
+	<動作参照 名前="跳ねる" />
+</動作>
+<動作 種類="選択">
+	<動作参照 名前="猛ダッシュでIEの天井の左の端っこから飛び降りる"
+		条件="${mascot.environment.activeIE.topBorder.isOn(mascot.anchor) &amp;&amp;
+		mascot.anchor.x &lt; (mascot.environment.activeIE.left+mascot.environment.activeIE.right)/2}"/>
+	<動作参照 名前="猛ダッシュでIEの天井の右の端っこから飛び降りる"
+		条件="${mascot.environment.activeIE.topBorder.isOn(mascot.anchor) &amp;&amp;
+		mascot.anchor.x &gt;= (mascot.environment.activeIE.left+mascot.environment.activeIE.right)/2}" />
+</動作>
+<動作参照 名前="猛ダッシュ" 目的地X="${ mascot.anchor.x+(mascot.environment.cursor.x-mascot.anchor.x)*Math.random()/2 }" />
+<動作参照 名前="転ぶ" 条件="${Math.random() &lt; 0.05}" />
+<動作参照 名前="猛ダッシュ" 目的地X="${ mascot.anchor.x+(mascot.environment.cursor.x-mascot.anchor.x)*Math.random() }" />
+<動作参照 名前="転ぶ" 条件="${Math.random() &lt; 0.05}" />
+<動作参照 名前="猛ダッシュ" 目的地X="#{mascot.environment.cursor.x+ずれ}"
+	ずれ="${ mascot.anchor.x &lt; mascot.environment.cursor.x ?
+		-Math.min( mascot.environment.cursor.x-mascot.anchor.x, Math.random()*200) :
+		Math.min( mascot.anchor.x-mascot.environment.cursor.x, Math.random()*200 ) }" />
+<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+</動作>
+</動作>
+
+坐在鼠标下,看鼠标  取鼠标位置
+<動作 名前="座ってマウスのほうを見る" 種類="複合" 繰り返し="false">
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+	<動作参照 名前="座ってマウスを見上げる" 長さ="${10+Math.random()*10}" />
+	<動作参照 名前="振り向く" 右向き="${mascot.anchor.x &lt; mascot.environment.cursor.x}" />
+</動作>
+
+拔萝卜 单动画(应该属于列表一)
+<動作 名前="引っこ抜く1" 種類="組み込み" クラス="com.group_finity.mascot.action.Breed"
+	生まれる場所X="-32" 生まれる場所Y="96" 生まれた時の行動="引っこ抜かれる">
+	<アニメーション>
+		<ポーズ 画像="/shime1.png" 基準座標="64,128" 移動速度="0,0" 長さ="16" />
+		<ポーズ 画像="/shime38.png" 基準座標="96,128" 移動速度="0,0" 長さ="4" />
+		<ポーズ 画像="/shime39.png" 基準座標="96,128" 移動速度="0,0" 長さ="40" />
+		<ポーズ 画像="/shime40.png" 基準座標="96,128" 移動速度="0,0" 長さ="40" />
+		<ポーズ 画像="/shime41.png" 基準座標="96,128" 移動速度="0,0" 長さ="40" />
+	</アニメーション>
+</動作>
+
+拔萝卜全过程
+<動作 名前="引っこ抜く" 種類="複合">
+	<動作参照 名前="引っこ抜く1" />
+	<動作参照 名前="引っこ抜く2" />
+	<動作参照 名前="落ちる" 初速X="${mascot.lookRight ? -20 : 20}"/>
+	<動作参照 名前="跳ねる" />
+	<動作参照 名前="寝そべる" 長さ="40" />
+</動作>
+
+被拔出
+<動作 名前="引っこ抜かれる" 種類="複合">
+	<動作参照 名前="落ちる" 初速X="${mascot.lookRight ? 10 : -10}" 初速Y="-40"/>
+	<動作参照 名前="跳ねる" />
+</動作>
+
+分裂 单动画
+<動作 名前="分裂する" 種類="複合">
+	<動作参照 名前="分裂1" />
+	<動作参照 名前="変位" X="16" />
+	<動作参照 名前="振り向く" />
+	<動作参照 名前="分裂した" />
+</動作>
+
+分裂过程
+<動作 名前="分裂した" 種類="複合">
+	<動作参照 名前="落ちる" 初速X="${mascot.lookRight ? 10 : -10}" 初速Y="-5"/>
+	<動作参照 名前="跳ねる" />
+</動作>
